@@ -1,0 +1,31 @@
+# Doctor Appointment Portal (CLI)
+
+A **Command-Line Interface (CLI) application** for managing a hospital system, doctors, patients, and appointments.  
+Built with **Dart**.
+
+---
+
+## 🚀 Project Overview
+
+This project simulates a **hospital management system** in the terminal.  
+It allows users to manage:
+
+- **Doctors**  
+- **Patients**  
+- **Appointments**  
+- **Hospital system operations**
+
+The goal is to practice **OOP concepts, CLI interfaces, and unit testing** in Dart while collaborating as a team.
+
+---
+
+## 👥 Team Roles
+
+| Team Member       | Responsibilities                                      |
+|------------------|-------------------------------------------------------|
+| **Ra FaT**        | Implement **Hospital** and **Doctor** classes, handle core system logic |
+| **Chey Rotana**   | Implement **Patient** and **Appointment** classes, handle scheduling logic |
+| **Both**          | Integrate all modules, implement CLI UI, write test cases |
+
+---
+
