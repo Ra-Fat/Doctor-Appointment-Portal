@@ -1,31 +1,56 @@
-# Doctor Appointment Portal (CLI)
+# 🏥 Doctor Appointment Portal (CLI)
 
 A **Command-Line Interface (CLI) application** for managing a hospital system, doctors, patients, and appointments.  
-Built with **Dart**.
+Built with **Dart**. The goal of the project is to practice **OOP concepts, CLI interaction, and unit testing** while collaborating as a team.
+
+The project is **collaborative**, with each team member responsible for specific modules. All modules are integrated into the main CLI interface with proper test coverage.
 
 ---
 
-## 🚀 Project Overview
+## 👥 Team Roles & Contributions
 
-This project simulates a **hospital management system** in the terminal.  
-It allows users to manage:
+### 👨‍💼 Ra FaT (Hospital & Doctor Manager)
+- Implements **Hospital** and **Doctor** classes  
+- Handles core system logic and doctor management  
+- Integrates with CLI interface
 
-- **Doctors**  
-- **Patients**  
-- **Appointments**  
-- **Hospital system operations**
+### 🔍 Chey Rotana (Patient & Appointment Manager)
+- Implements **Patient** and **Appointment** classes  
+- Handles scheduling, booking, and appointment management  
+- Integrates with CLI interface
 
-The goal is to practice **OOP concepts, CLI interfaces, and unit testing** in Dart while collaborating as a team.
+### 🛠️ Both
+- Combine all modules into the **main CLI**  
+- Write **unit test cases** for each module  
+- Ensure smooth and consistent CLI experience
+
+---
+
+## 🛠️ Technologies Used
+
+- **Dart** – Programming language for all modules  
+- **CLI (Command-Line Interface)** – User interaction via terminal  
+- **Dart Test** – Unit testing framework for module verification
 
 ---
 
-## 👥 Team Roles
+## 🧠 Dart Concepts Used
 
-| Team Member       | Responsibilities                                      |
-|------------------|-------------------------------------------------------|
-| **Ra FaT**        | Implement **Hospital** and **Doctor** classes, handle core system logic |
-| **Chey Rotana**   | Implement **Patient** and **Appointment** classes, handle scheduling logic |
-| **Both**          | Integrate all modules, implement CLI UI, write test cases |
+### 🔹 Classes & OOP
+- Encapsulation, constructors, methods  
+- Example: `Doctor`, `Patient`, `Appointment`, `Hospital`
+
+### 🔹 CLI Interaction
+- Input/output handling for user commands  
+- Menus, prompts, and navigation in the terminal
+
+### 🔹 Collections
+- Lists, Maps, and other data structures to store doctors, patients, and appointments
+
+### 🔹 Testing
+- Unit tests for every class to ensure correctness and reliability
 
 ---
+
+## 📁 Project Structure
 
