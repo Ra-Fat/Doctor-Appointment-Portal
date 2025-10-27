@@ -1,4 +1,3 @@
-import 'package:my_first_project/domain/doctor.dart';
 import 'package:my_first_project/domain/patient.dart';
 import 'package:uuid/uuid.dart';
 
