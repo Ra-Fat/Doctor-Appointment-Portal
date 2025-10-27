@@ -10,19 +10,16 @@ The project is **collaborative**, with each team member responsible for specific
 ## 👥 Team Roles & Contributions
 
 ### 👨‍💼 Ra FaT (Hospital & Doctor Manager)
-
 - Implements **Hospital** and **Doctor** classes.  
 - Handles core system logic and doctor management.  
 - Integrates with CLI interface.
 
 ### 🔍 Chey Rotana (Patient & Appointment Manager)
-
 - Implements **Patient** and **Appointment** classes.  
 - Handles scheduling, booking, and appointment management.  
 - Integrates with CLI interface.
 
 ### 🛠️ Both
-
 - Combine all modules into the **main CLI**.  
 - Write **unit test cases** for each module.  
 - Ensure smooth and consistent CLI experience.
@@ -30,7 +27,6 @@ The project is **collaborative**, with each team member responsible for specific
 ---
 
 ## 🛠️ Technologies Used
-
 - **Dart** – Programming language for all modules.  
 - **CLI (Command-Line Interface)** – User interaction via terminal.  
 - **Dart Test** – Unit testing framework for module verification.
@@ -40,19 +36,15 @@ The project is **collaborative**, with each team member responsible for specific
 ## 🧠 Dart Concepts Used
 
 ### 🔹 Classes & OOP
-
 - Encapsulation, constructors, methods.  
 - Example: `Doctor`, `Patient`, `Appointment`, `Hospital`.
 
 ### 🔹 CLI Interaction
-
 - Input/output handling for user commands.  
 - Menus, prompts, and navigation in the terminal.
 
 ### 🔹 Collections
-
 - Lists, Maps, and other data structures to store doctors, patients, and appointments.
 
 ### 🔹 Testing
-
 - Unit tests for every class to ensure correctness and reliability.
