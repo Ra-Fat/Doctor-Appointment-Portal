@@ -5,11 +5,12 @@ import 'package:uuid/uuid.dart';
 
 class Appointment {
   String _id;
+  String _doctorId;
+  String _patientId;
   DateTime _dateTime;
   String _status;
   String _description;
-  Patient _patient;
-  Doctor _doctor;
+
 
   static final _uuid = Uuid();
 
@@ -18,21 +19,23 @@ class Appointment {
       required DateTime dateTime,
       required String status,
       required String description,
-      required Doctor doctor,
-      required Patient patient})
+      required String doctorId,
+      required Patient patientId})
       : _id = id ?? _uuid.v4(),
         _dateTime = dateTime,
         _status = status,
         _description = description,
-        _doctor = doctor,
-        _patient = patient;
+        _doctorId = doctorId,
+        _patientId = patientId.id;
+
+
 
   String get id => _id;
   DateTime get dateTime => _dateTime;
   String get status => _status;
   String get description => _description;
-  Patient get patient => _patient;
-  Doctor get doctor => _doctor;
+  String get doctorId => _doctorId;
+  String get patientId => _patientId;
 
   @override
   String toString() {
@@ -41,8 +44,8 @@ class Appointment {
     Date & Time: $_dateTime
     Status: $_status
     Description: $_description
-    Doctor: ${_doctor.name}
-    Patient: ${_patient.name}
+    Doctor: ${_doctorId}
+    Patient: ${_patientId}
   ''';
   }
 }

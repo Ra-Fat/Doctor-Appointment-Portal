@@ -1,4 +1,3 @@
-import 'package:my_first_project/domain/appointment.dart';
 import 'package:uuid/uuid.dart';
 
 enum Gender { Male, Female }
@@ -20,7 +19,7 @@ class Doctor{
   String _name;
   Specialization _specialization;
   String _email;
-  Map<int, Appointment> _appointments;
+  List<String> _appointmentsIds;
   Gender _gender;
   int _age;
 
@@ -30,7 +29,7 @@ class Doctor{
   String get name => _name;
   Specialization get specialization => _specialization;
   String get email => _email;
-  Map<int, Appointment> get appointments => _appointments;
+  List<String> get appointments => _appointmentsIds;
   Gender get gender => _gender;
   int get age => _age;
 
@@ -38,14 +37,14 @@ class Doctor{
   Doctor({
     String? id, required String name, 
     required Specialization specialization,
-    required String email, Map<int, Appointment>? appointments,
+    required String email, List<String>? appointmentIds,
     required Gender gender, required int age
     }): 
         _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = specialization,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -54,7 +53,7 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
     }): 
@@ -62,7 +61,7 @@ class Doctor{
         _name = name,
         _specialization = Specialization.generalPractitioner,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -70,7 +69,7 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
     }): 
@@ -78,7 +77,7 @@ class Doctor{
         _name = name,
         _specialization = Specialization.pediatrician,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -86,14 +85,14 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
   })  : _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = Specialization.cardiologist,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -101,14 +100,14 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
   })  : _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = Specialization.dermatologist,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -116,14 +115,14 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
   })  : _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = Specialization.neurologist,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -131,14 +130,14 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
   })  : _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = Specialization.orthopedist,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -146,14 +145,14 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
   })  : _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = Specialization.gynecologist,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -161,14 +160,14 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
   })  : _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = Specialization.psychiatrist,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
@@ -176,31 +175,20 @@ class Doctor{
     String? id,
     required String name,
     required String email,
-    Map<int, Appointment>? appointments,
+    List<String>? appointmentIds,
     required Gender gender,
     required int age,
   })  : _id = id ?? _uuid.v4(),
         _name = name,
         _specialization = Specialization.surgeon,
         _email = email,
-        _appointments = appointments ?? {},
+        _appointmentsIds = appointmentIds ?? [],
         _gender = gender,
         _age = age;
 
+
   @override
   String toString() {
-    String appointmentsList = '';
-    if (_appointments.isEmpty) {
-      appointmentsList = 'No appointments';
-    } else {
-      _appointments.forEach((key, appt) {
-        final time =
-            '${appt.dateTime.hour.toString().padLeft(2, '0')}:${appt.dateTime.minute.toString().padLeft(2, '0')}:${appt.dateTime.second.toString().padLeft(2, '0')}';
-        appointmentsList +=
-            '\n\t[$key] ${appt.dateTime.year}-${appt.dateTime.month.toString().padLeft(2, '0')}-${appt.dateTime.day.toString().padLeft(2, '0')} $time - ${appt.patient.name} (${appt.status})';
-      });
-    }
-
     return '''
       Doctor ID: $_id
       Name: $_name
@@ -208,7 +196,7 @@ class Doctor{
       Age: $_age
       Gender: ${_gender.name}
       Email: $_email
-      Appointments (${_appointments.length}):$appointmentsList
+      Appointment IDs: ${_appointmentsIds.isEmpty ? "No appointments" : _appointmentsIds.join(", ")}
     ''';
   }
 }
