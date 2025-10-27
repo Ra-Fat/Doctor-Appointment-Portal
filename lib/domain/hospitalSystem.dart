@@ -1,20 +1,17 @@
-import 'package:my_first_project/domain/appointment.dart';
-import 'package:my_first_project/domain/doctor.dart';
-import 'package:my_first_project/domain/patient.dart';
-
 class Hospitalsystem {
-  Map<String, Patient> _patients;
-  Map<String, Doctor> _doctors;
-  Map<String, Appointment> _appointments;
+  List<String> _patientIds;
+  List<String> _doctorIds;
+  List<String> _appointmentIds;
 
-  Hospitalsystem({required Map<String, Patient> patients, required Map<String, Doctor> doctors, required Map<String, Appointment> appointments})
-      : _patients = patients,
-        _doctors = doctors,
-        _appointments = appointments;
-  
-  Map<String , Patient> get patients => _patients;
-  Map<String , Doctor> get doctors => _doctors;
-  Map<String , Appointment> get appointments => _appointments;
+
+  Hospitalsystem({List<String>? patientIds, List<String>? doctorIds, List<String>? appointmentIds,})
+      : _patientIds = patientIds ?? [],
+        _doctorIds = doctorIds ?? [],
+        _appointmentIds = appointmentIds ?? [];
+
+  List<String> get patientIds => _patientIds;
+  List<String> get doctorIds => _doctorIds;
+  List<String> get appointmentIds => _appointmentIds;
 
 
   void addDoctor() {
