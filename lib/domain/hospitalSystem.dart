@@ -1,12 +1,16 @@
-import 'doctor.dart';
 import 'patient.dart';
 import 'appointment.dart';
+
+enum Gender { Male, Female }
 
 
 class Hospitalsystem {
   List<String> _patientIds;
   List<String> _doctorIds;
   List<String> _appointmentIds;
+
+  // Use to update the patient data
+  List<Patient> _patients = [];
 
 
   Hospitalsystem({List<String>? patientIds, List<String>? doctorIds, List<String>? appointmentIds,})
@@ -19,22 +23,6 @@ class Hospitalsystem {
   List<String> get appointmentIds => _appointmentIds;
 
 
-  void addDoctor(Doctor doctor){
-    if(!_doctorIds.contains(doctor.id)){
-        _doctorIds.add(doctor.id);
-        print("Doctor: ${doctor.name} added to system success!!");
-    }else{
-        print("Failed to add !!!");
-    }
-  }
-  void addPatient(Patient patient){
-    if(!_patientIds.contains(patient.id)){
-      _patientIds.add(patient.id);
-      print("Patient: ${patient.name} added to system success!!");
-    }else{
-      print("Failed to add !!!");
-    }
-  }
 
   void createAppointment(Appointment appointment){
     if(!_doctorIds.contains(appointment.doctorId)){
@@ -47,7 +35,7 @@ class Hospitalsystem {
       return;
     }
 
-    if(!_appointmentIds.contains(appointmentIds)){
+    if(!_appointmentIds.contains(appointment.id)){
       _appointmentIds.add(appointment.id);
       print("Appointment Create Success!!!");
     }else{
@@ -80,7 +68,56 @@ class Hospitalsystem {
     print("Doctor: ${_doctorIds} \n");
   }
 
+  void addPatient(Patient patient){
+    if(!_patientIds.contains(patient.id)){
+      _patientIds.add(patient.id);
+      print("Patient: ${patient.name} added to system success!!");
+    }else{
+      print("Failed to add !!!");
+    }
+  }
+
+  void updatePatient(String patientId, {String? name, int? age, Gender? gender, String? email}){
+     try{
+        var patient = _patients.firstWhere((p)=> p.id == patientId);
+
+        if(name != null){
+          patient.name = name;
+        }
+        if(age != null){
+          patient.age = age;
+        }
+        
+        if(email != null){
+          patient.email = email;
+        }
+     }catch(err){
+        print("Patient not found !!!");
+     }
+  }
+
+  void removePatient(String patientId){
+    try{
+      var patient = _patients.firstWhere((p)=> p.id == patientId);
+
+      _patients.remove(patient);
+      _patientIds.remove(patientId);
+      print("Patient With ID ${patient.id} removed succesful !!!");
+
+    }catch(err){
+      print("Patient not found!!!");
+    }
+  }
+
   void viewAllPatient(){
     print("Patient: ${_patientIds} \n");
+  }
+
+  Patient? getPatientById(String patientId){
+    try{
+      return _patients.firstWhere((p)=> p.id == patientId);
+    }catch(err){
+      print("Patient not found!!!");
+    }
   }
 }
