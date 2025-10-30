@@ -18,6 +18,12 @@ class Patient {
   String get email => _email;
   List<String> get appointmentIds => _appointmentIds;
 
+  set name(String newName) => _name = newName;
+  set age(int newAge) => _age = newAge;
+  set gender(Gender newGender) => _gender = newGender;
+  set email(String newEmail) => _email = newEmail;
+
+
   static final _uuid = Uuid();
 
   Patient(
