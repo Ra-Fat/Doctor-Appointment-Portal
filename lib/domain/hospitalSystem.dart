@@ -119,5 +119,6 @@ class Hospitalsystem {
     }catch(err){
       print("Patient not found!!!");
     }
+    return null;
   }
 }

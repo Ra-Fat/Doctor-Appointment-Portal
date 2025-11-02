@@ -1,5 +1,5 @@
+import 'package:my_first_project/domain/appointment.dart';
 import 'package:uuid/uuid.dart';
-
 
 enum Gender { Male, Female }
 
@@ -9,20 +9,17 @@ class Patient {
   int _age;
   Gender _gender;
   String _email;
-  List<String> _appointmentIds;
 
   String get id => _id;
   String get name => _name;
   int get age => _age;
   Gender get gender => _gender;
   String get email => _email;
-  List<String> get appointmentIds => _appointmentIds;
 
   set name(String newName) => _name = newName;
   set age(int newAge) => _age = newAge;
   set gender(Gender newGender) => _gender = newGender;
   set email(String newEmail) => _email = newEmail;
-
 
   static final _uuid = Uuid();
 
@@ -37,7 +34,6 @@ class Patient {
         _name = name,
         _age = age,
         _gender = gender,
-        _appointmentIds = appointmentIds,
         _email = email;
 
   @override
@@ -48,7 +44,6 @@ class Patient {
       Age: $_age
       Gender: ${_gender.name}
       Email: $_email
-      Appointment IDs: ${_appointmentIds.isEmpty ? "No appointments" : _appointmentIds.join(", ")}
     ''';
   }
 }
