@@ -1,40 +1,50 @@
 import 'dart:io';
-import '../domain/appointment.dart';
-import '../domain/doctor.dart';
-import 'invoice.dart';
-import '../domain/hospitalSystem.dart';
-import '../domain/patient.dart';
 
-class MenuConsole{
-  late Hospitalsystem hospitalsystem;
+import 'package:my_first_project/domain/appointmentManager.dart';
+import 'package:my_first_project/domain/doctor.dart';
+import 'package:my_first_project/domain/patient.dart';
+import 'package:my_first_project/ui/doctorUI.dart';
+import 'package:my_first_project/ui/patientUI.dart';
 
-  void Menu(){
+class MenuConsole {
+  Appointmentmanager manager;
+  Patient patients;
+  List<Doctor> doctors;
 
-    print("--- Welcome to CADT hospital ---");
+  MenuConsole(this.manager, this.patients, this.doctors);
 
-    while(true){
-      print('---------------------------');
-      print("1. Manage Appointment");
-      print("2. Manage Patient");
-      print("3. Arrange Doctor");
-      print("4. Exit the program");
-      print('---------------------------');
+  void main() {
+    while (true) {
+      print('\n=== Hospital Appointment Portal ===');
+      print('1. Login');
+      print('2. Exit');
+      stdout.write('Enter your choice: ');
+      final choice = stdin.readLineSync();
 
-      stdout.write("Enter your choice: ");
-      String? choice= stdin.readLineSync();
+      switch (choice) {
+        case '1':
+          stdout.write('Username: ');
+          final username = stdin.readLineSync() ?? '';
+          stdout.write('Password: ');
+          final password = stdin.readLineSync() ?? '';
 
-      switch(choice){
-        case "1":
+          if (username.startsWith('patient') && password.isNotEmpty) {
+            print('Patient logged in. Redirecting to Patient Portal...');
+            PatientUi(manager,patients, doctors).showMenu();
+          } else if (username.startsWith('doctor')) {
+            print('Doctor logged in. Redirecting to Doctor Portal...');
+            DoctorUi(manager, doctors).showMenu();
+          } else {
+            print('Invalid username or password. Try again.');
+          }
           break;
-        case "2":
-          break;
-        case "3":
-          break;
-        case "4":
-          print("Exit the program!!!");
+
+        case '2':
+          print('Exiting... Goodbye!');
           return;
+
         default:
-          print("Invalid choice !!! \n");
+          print('Invalid choice. Try again.');
       }
     }
   }

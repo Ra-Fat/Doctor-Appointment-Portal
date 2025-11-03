@@ -34,24 +34,19 @@ class Appointment {
         status = status ?? AppointmentStatus.scheduled;
 
   String get id => _id;
-
-  /// Check if this appointment conflicts with anotherAppointment
+  
   bool conflictsWith(Appointment otherAppointment) { 
     return doctor == otherAppointment.doctor &&
         startTime.isBefore(otherAppointment.endTime) &&
         endTime.isAfter(otherAppointment.startTime);
   }
 
-  /// Check if appointment is upcoming
   bool isUpcoming() => DateTime.now().isBefore(startTime);
 
-  /// Check if appointment is missed
   bool isMissed() => DateTime.now().isAfter(endTime) && status != AppointmentStatus.completed && status != AppointmentStatus.cancelled;
 
-  /// Mark appointment as completed
   void markCompleted() => status = AppointmentStatus.completed;
 
-  /// Mark appointment as cancelled
   void markCancelled() => status = AppointmentStatus.cancelled;
 
   @override

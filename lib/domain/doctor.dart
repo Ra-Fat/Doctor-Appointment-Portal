@@ -20,13 +20,16 @@ enum Specialization {
 class Doctor {
   String _id;
   String _name;
+  String _password;
   Specialization _specialization;
   String _email;
-  List<Availability> availability;
+  List<Availability> availability = [];
+  List<Appointment> appointments = [];
 
   static final _uuid = Uuid();
 
   String get id => _id;
+  String get password => _password;
   String get name => _name;
   Specialization get specialization => _specialization;
   String get email => _email;
@@ -34,55 +37,27 @@ class Doctor {
   Doctor(
       {String? id,
       required String name,
+      required String password,
       required Specialization specialization,
       required String email,
       List<Availability>? availibility})
       : _id = id ?? _uuid.v4(),
         _name = name,
+        _password = password,
         _specialization = specialization,
         _email = email,
         availability = availibility ?? [];
 
-  bool isAvaialble(DateTime start, DateTime end, Appointmentmanager manager) {
-    List<Appointment> appointments = manager.getAllAppointment(this);
+  bool isAvaialable(DateTime start, DateTime end, Appointmentmanager manager) {
+    final bool fitSlots = availability.any((slot) => slot.isFits(start, end));
 
-    String dayName = getDayName(start.weekday);
-    bool validSlot = availability.any((slot) =>
-        slot.day == dayName &&
-        start.isAfter(slot.startTime) &&
-        end.isBefore(slot.endTime));
+    if (!fitSlots) return false;
 
-    if (!validSlot) return false;
+    final bool hasConflict = manager.getAllAppointmentForDoctor(this).any((a) =>
+        a.conflictsWith(Appointment(
+            doctor: this, patient: a.patient, startTime: start, endTime: end)));
 
-    bool hasConflict = appointments.any((a) =>
-        a.status == AppointmentStatus.scheduled &&
-        start.isBefore(a.endTime) &&
-        end.isAfter(a.startTime));
-
-    if (hasConflict) return false;
-
-    return true;
-  }
-
-  String getDayName(int weekday) {
-    switch (weekday) {
-      case DateTime.monday:
-        return 'Monday';
-      case DateTime.tuesday:
-        return 'Tuesday';
-      case DateTime.wednesday:
-        return 'Wednesday';
-      case DateTime.thursday:
-        return 'Thursday';
-      case DateTime.friday:
-        return 'Friday';
-      case DateTime.saturday:
-        return 'Saturday';
-      case DateTime.sunday:
-        return 'Sunday';
-      default:
-        return '';
-    }
+    return !hasConflict;
   }
 
   @override
@@ -93,6 +68,7 @@ class Doctor {
       Specialization: ${_specialization.name}
       Email: $_email
       Availability: $availability
+      Appointment: $appointments
     ''';
   }
 }
