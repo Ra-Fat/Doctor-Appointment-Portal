@@ -1,12 +1,12 @@
 import 'dart:io';
 import '../domain/appointment.dart';
-import '../domain/doctor.dart';
+import '../domain/users/doctor.dart';
 import 'invoice.dart';
 import '../domain/hospitalSystem.dart';
-import '../domain/patient.dart';
+import '../domain/users/patient.dart';
 
 class MenuConsole{
-  late Hospitalsystem hospitalsystem;
+  // late Hospitalsystem hospitalsystem;
 
   void Menu(){
 

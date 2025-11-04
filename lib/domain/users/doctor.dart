@@ -1,0 +1,117 @@
+import 'package:my_first_project/domain/appointment.dart';
+import 'package:my_first_project/domain/availability.dart';
+import 'package:my_first_project/domain/appointmentManager.dart';
+import 'user.dart';
+
+enum Specialization {
+  generalPractitioner,
+  pediatrician,
+  cardiologist,
+  dermatologist,
+  neurologist,
+  orthopedist,
+  gynecologist,
+  psychiatrist,
+  surgeon
+}
+
+class Doctor extends User{
+  String _name;
+  Specialization _specialization;
+  List<Availability> availability;
+
+  String get name => _name;
+  Specialization get specialization => _specialization;
+
+  Doctor(
+      {required String id,
+      required String email,
+      required String password,
+      required String name,
+      required Gender gender,
+      required Specialization specialization,
+      List<Availability>? availability})
+      : _name = name,
+        _specialization = specialization,
+        availability = availability ?? [],
+        super(
+          id: id,
+          email: email,
+          password: password,
+          role: UserRole.doctor,
+          gender: gender,
+        );
+  
+  // 
+  factory Doctor.fromMap(Map<String, dynamic> json) {
+    return Doctor(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      password: json['[password]'] as String, 
+      gender: json['gender'] == 'Male' ? Gender.Male : Gender.Female,
+      specialization: Specialization.values.firstWhere(
+        (e) => e.name == json['specialization'],
+        orElse: () => Specialization.generalPractitioner,
+      ),
+      availability: (json['availability'] as List<dynamic>?)
+          ?.map((e) => Availability.fromJson(e))
+          .toList(),
+    );
+  }
+
+
+  bool isAvailable(DateTime start, DateTime end, Appointmentmanager manager) {
+    List<Appointment> appointments = manager.getDoctorAppointment(this);
+
+    String dayName = getDayName(start.weekday);
+    bool validSlot = availability.any((slot) =>
+        slot.day == dayName &&
+        start.isAfter(slot.startTime) &&
+        end.isBefore(slot.endTime));
+
+    if (!validSlot) return false;
+
+    bool hasConflict = appointments.any((a) =>
+        a.status == AppointmentStatus.scheduled &&
+        start.isBefore(a.endTime) &&
+        end.isAfter(a.startTime));
+
+    if (hasConflict) return false;
+
+    return true;
+  }
+
+  String getDayName(int weekday) {
+    switch (weekday) {
+      case DateTime.monday:
+        return 'Monday';
+      case DateTime.tuesday:
+        return 'Tuesday';
+      case DateTime.wednesday:
+        return 'Wednesday';
+      case DateTime.thursday:
+        return 'Thursday';
+      case DateTime.friday:
+        return 'Friday';
+      case DateTime.saturday:
+        return 'Saturday';
+      case DateTime.sunday:
+        return 'Sunday';
+      default:
+        return '';
+    }
+  }
+
+  @override
+  String toString() {
+    return '''
+      Doctor ID: $id
+      Name: $name
+      Gender: ${gender.name}
+      Specialization: ${_specialization.name}
+      Email: $email
+      Availability: $availability
+    ''';
+  }
+}

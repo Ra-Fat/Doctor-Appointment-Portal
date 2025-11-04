@@ -1,0 +1,32 @@
+[
+  {
+    "id": "U001",
+    "email": "chanlin@example.com",
+    "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbddabf0be9f3e21401e9",
+    "role": "patient"
+  },
+  {
+    "id": "U002",
+    "email": "sophea@example.com",
+    "passwordHash": "ef92b778ba1d8b69e24f8a7bbf5a1a284d2b8a9a1ad8e6b9a936dd8fdf1b8f32",
+    "role": "patient"
+  },
+  {
+    "id": "U003",
+    "email": "dr.sokha@example.com",
+    "passwordHash": "2c1743a391305fbf367df8e4f069f9f9a364735c6d1a50d4fbc8b2290e2c5e41",
+    "role": "doctor"
+  },
+  {
+    "id": "U004",
+    "email": "dr.vanna@example.com",
+    "passwordHash": "bcb92e2a51c2044b61a3d2b8a47a1e3c6c8a126ccca5e8f9a78c1b73e32e3cbb",
+    "role": "doctor"
+  },
+  {
+    "id": "U005",
+    "email": "piseth@example.com",
+    "passwordHash": "6bb4837eb74329105ee4568dda7dc67ed2ca2ad9b9e9b5ed4b9f9e9ddfce6a7e",
+    "role": "patient"
+  }
+]
