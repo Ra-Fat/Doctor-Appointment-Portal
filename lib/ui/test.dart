@@ -36,6 +36,7 @@ void main() async {
 
   final role = authService.login(email.trim(), password.trim());
 
+
   if (role == null) {
     print('Login failed');
   } else if (role == UserRole.patient) {
