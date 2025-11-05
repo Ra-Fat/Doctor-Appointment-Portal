@@ -1,7 +1,6 @@
-enum UserRole {
-  patient,
-  doctor
-}
+import 'package:my_first_project/domain/appointment.dart';
+
+enum UserRole { patient, doctor }
 
 enum Gender { Male, Female }
 
@@ -12,6 +11,7 @@ class User {
   final UserRole role;
   final Gender gender;
   final String name;
+  List<Appointment> appointments;
 
   User({
     required this.id,
@@ -20,7 +20,8 @@ class User {
     required this.role,
     required this.gender,
     required this.name,
-  });
+    List<Appointment>? appointments,
+  }) : appointments = appointments ?? [];
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -45,6 +46,24 @@ class User {
       'gender': gender.toString().split('.').last,
       'name': name,
     };
+  }
+
+  List<Appointment> getUpcomingAppointments() {
+    return appointments
+      .where((appointment) => appointment.isUpcoming())
+      .toList();
+  }
+
+  List<Appointment> getMissedAppointments() {
+      return appointments
+      .where((appointment) => appointment.isMissed())
+      .toList();
+    }
+
+  List<Appointment> getCancelledAppointments() {
+    return appointments
+      .where((appointment) => appointment.isCancelled())
+      .toList();
   }
 
   @override

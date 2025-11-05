@@ -1,19 +1,22 @@
 import 'dart:io';
 
-import 'package:my_first_project/domain/appointmentManager.dart';
-import 'package:my_first_project/domain/Doctor.dart';
-import 'package:my_first_project/domain/patient.dart';
-import 'package:my_first_project/ui/doctorUI.dart';
-import 'package:my_first_project/ui/patientUI.dart';
+import 'package:my_first_project/application/authenticationService.dart';
+import 'package:my_first_project/application/appointmentManager.dart';
+import 'package:my_first_project/domain/users/doctor.dart';
+import 'package:my_first_project/domain/users/patient.dart';
+import 'package:my_first_project/ui/doctorMenu.dart';
+import 'package:my_first_project/ui/patientMenu.dart';
 
 class MenuConsole {
   Appointmentmanager manager;
-  Patient patients;
+  List<Patient> patients;
   List<Doctor> doctors;
+  AuthenticationService authService;
 
-  MenuConsole(this.manager, this.patients, this.doctors);
+  MenuConsole(this.manager, this.patients, this.doctors)
+      : authService = AuthenticationService(patients, doctors);
 
-  void main() {
+  void start() {
     while (true) {
       print('\n=== Hospital Appointment Portal ===');
       print('1. Login');
@@ -23,19 +26,22 @@ class MenuConsole {
 
       switch (choice) {
         case '1':
-          stdout.write('Username: ');
-          final username = stdin.readLineSync() ?? '';
+          stdout.write('Email: ');
+          final String email = stdin.readLineSync() ?? '';
           stdout.write('Password: ');
-          final password = stdin.readLineSync() ?? '';
+          final String password = stdin.readLineSync() ?? '';
 
-          if (username.startsWith('patient') && password.isNotEmpty) {
+          final user = authService.login(email, password);
+
+          if (user is Patient) {
+            manager.updateMissedAppointment();
             print('Patient logged in. Redirecting to Patient Portal...');
-            PatientUi(manager,patients, doctors).showMenu();
-          } else if (username.startsWith('doctor')) {
+            PatientUi(manager, user, doctors).showMenu();
+          } else if (user is Doctor) {
             print('Doctor logged in. Redirecting to Doctor Portal...');
-            DoctorUi(manager, doctors).showMenu();
+            DoctorUi(manager, user).showMenu();
           } else {
-            print('Invalid username or password. Try again.');
+            print('Invalid email or password. Try again.');
           }
           break;
 

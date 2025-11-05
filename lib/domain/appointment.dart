@@ -21,34 +21,40 @@ class Appointment {
   static final _uuid = Uuid();
 
   Appointment(
-      {
-        String? id,
-        required this.doctor,
-        required this.patient,
-        required this.startTime,
-        required this.endTime,
-        AppointmentStatus? status,
-        this.description
-      })
+      {String? id,
+      required this.doctor,
+      required this.patient,
+      required this.startTime,
+      required this.endTime,
+      AppointmentStatus? status,
+      this.description})
       : _id = id ?? _uuid.v4(),
         status = status ?? AppointmentStatus.scheduled;
 
   String get id => _id;
-  
-  bool conflictsWith(Appointment otherAppointment) { 
-    return doctor == otherAppointment.doctor &&
-        startTime.isBefore(otherAppointment.endTime) &&
-        endTime.isAfter(otherAppointment.startTime);
+
+  bool conflictsWith(Appointment appointment) {
+    return doctor == appointment.doctor &&
+        startTime.isBefore(appointment.endTime) &&
+        endTime.isAfter(appointment.startTime);
   }
 
   bool isUpcoming() => DateTime.now().isBefore(startTime);
 
-  bool isMissed() => DateTime.now().isAfter(endTime) && status != AppointmentStatus.completed && status != AppointmentStatus.cancelled;
+  bool isMissed() {
+    // Add 24-hour grace period for doctors to mark appointment as completed
+    final gracePeriod = endTime.add(Duration(hours: 24));
+    return DateTime.now().isAfter(gracePeriod) &&
+        status != AppointmentStatus.completed &&
+        status != AppointmentStatus.cancelled;
+  }
 
-  // Check does it can be rescheduled or not
-  bool canBeRescheduled() => status == AppointmentStatus.scheduled && DateTime.now().isBefore(startTime);
+  bool isCancelled() => status == AppointmentStatus.cancelled;
 
-  /// Mark appointment as completed
+  bool canBeRescheduled() =>
+      status == AppointmentStatus.scheduled &&
+      DateTime.now().isBefore(startTime);
+
   void markCompleted() => status = AppointmentStatus.completed;
 
   void markCancelled() => status = AppointmentStatus.cancelled;

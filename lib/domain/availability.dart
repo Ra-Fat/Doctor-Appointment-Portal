@@ -18,14 +18,18 @@ class Availability {
     List<String> endParts = endTimeStr.split(':');
 
     DateTime startTime = DateTime(
-      2000, 1, 1,
+      2000,
+      1,
+      1,
       int.parse(startParts[0]),
       int.parse(startParts[1]),
       int.parse(startParts[2]),
     );
 
     DateTime endTime = DateTime(
-      2000, 1, 1,
+      2000,
+      1,
+      1,
       int.parse(endParts[0]),
       int.parse(endParts[1]),
       int.parse(endParts[2]),
@@ -38,9 +42,31 @@ class Availability {
     );
   }
 
+  bool isFit(DateTime start, DateTime end) {
+    final String dayName = _getDayName(start.weekday);
+    if (dayName != day) {
+      return false;
+    }
 
-  @override
-  String toString() {
-    return '$day: ${startTime.toIso8601String()} - ${endTime.toIso8601String()}';
+    // Extract time-of-day from appointment (ignore actual date)
+    // Normalize to year 2000 to compare against availability times
+    final appointmentStart = DateTime(2000, 1, 1, start.hour, start.minute);
+    final appointmentEnd = DateTime(2000, 1, 1, end.hour, end.minute);
+
+    return !appointmentStart.isBefore(startTime) &&
+        !appointmentEnd.isAfter(endTime);
+  }
+
+  String _getDayName(int weekday) {
+    const days = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    return days[weekday - 1];
   }
 }

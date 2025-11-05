@@ -1,6 +1,5 @@
 import 'package:my_first_project/domain/appointment.dart';
 import 'package:my_first_project/domain/availability.dart';
-import 'package:my_first_project/domain/appointmentManager.dart';
 import 'user.dart';
 
 enum Specialization {
@@ -29,6 +28,7 @@ class Doctor extends User {
     required Gender gender,
     required Specialization specialization,
     List<Availability>? availability,
+    List<Appointment>? appointments,
   })  : _specialization = specialization,
         availability = availability ?? [],
         super(
@@ -38,6 +38,7 @@ class Doctor extends User {
           role: UserRole.doctor,
           gender: gender,
           name: name,
+          appointments: appointments ?? [],
         );
 
   factory Doctor.fromMap(Map<String, dynamic> json) {
@@ -57,28 +58,18 @@ class Doctor extends User {
     );
   }
 
+  bool isAvailable(DateTime start, DateTime end) {
+    final bool Availability =
+        availability.any((slot) => slot.isFit(start, end));
 
-  bool isAvailable(DateTime start, DateTime end, Appointmentmanager manager) {
-    List<Appointment> appointments = manager.getDoctorAppointment(this);
+    if (!Availability) return false;
 
-    if (!fitSlots) return false;
-
-    final bool hasConflict = manager.getAllAppointmentForDoctor(this).any((a) =>
-        a.conflictsWith(Appointment(
-            doctor: this, patient: a.patient, startTime: start, endTime: end)));
-
+    final bool hasConflict = appointments.any((existingAppointment) =>
+        existingAppointment.conflictsWith(Appointment(
+            doctor: this,
+            patient: existingAppointment.patient,
+            startTime: start,
+            endTime: end)));
     return !hasConflict;
-  }
-
-  @override
-  String toString() {
-    return '''
-        Doctor ID: $id
-        Name: $name
-        Gender: ${gender.name}
-        Specialization: ${_specialization.name}
-        Email: $email
-        Availability: $availability
-    ''';
   }
 }

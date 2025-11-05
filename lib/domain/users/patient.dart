@@ -1,3 +1,4 @@
+import 'package:my_first_project/domain/appointment.dart';
 import 'user.dart';
 
 class Patient extends User {
@@ -18,6 +19,7 @@ class Patient extends User {
     required String name,
     required int age,
     String? description,
+    List<Appointment>? appointments,
   })  : _age = age,
         _description = description,
         super(
@@ -27,6 +29,7 @@ class Patient extends User {
           role: UserRole.patient,
           gender: gender,
           name: name,
+          appointments: appointments,
         );
 
   factory Patient.fromMap(Map<String, dynamic> json) {
@@ -39,19 +42,5 @@ class Patient extends User {
       age: (json['age'] != null) ? json['age'] as int : 0,
       description: json['description'] as String?,
     );
-}
-
-
-
-  @override
-  String toString() {
-    return '''
-      Patient ID: $id
-      Name: $name
-      Age: $age
-      Gender: ${gender.name}
-      Email: $email
-      Description: $description
-    ''';
   }
 }
