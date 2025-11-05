@@ -1,16 +1,13 @@
 import 'user.dart';
 
 class Patient extends User {
-  String _name;
   int _age;
   String? _description;
 
-  String get name => _name;
   int get age => _age;
   String? get description => _description;
 
   set description(String? value) => _description = value;
-  set name(String newName) => _name = newName;
   set age(int newAge) => _age = newAge;
 
   Patient({
@@ -21,22 +18,29 @@ class Patient extends User {
     required String name,
     required int age,
     String? description,
-  })  : _name = name,
-        _age = age,
+  })  : _age = age,
         _description = description,
-        super(id: id, email: email, password: password, role: UserRole.patient, gender: gender);
-
+        super(
+          id: id,
+          email: email,
+          password: password,
+          role: UserRole.patient,
+          gender: gender,
+          name: name,
+        );
 
   factory Patient.fromMap(Map<String, dynamic> json) {
     return Patient(
       id: json['id'] as String,
-      email: json['email'] as String,
-      password: json['password'] as String,
+      email: (json['email'] as String?) ?? '',
+      password: (json['password'] as String?) ?? '',
       gender: json['gender'] == 'Male' ? Gender.Male : Gender.Female,
-      name: json['name'] as String,
-      age: json['age'] as int,
+      name: (json['name'] as String?) ?? 'Unknown',
+      age: (json['age'] != null) ? json['age'] as int : 0,
+      description: json['description'] as String?,
     );
-  }
+}
+
 
 
   @override

@@ -1,7 +1,6 @@
 [
   {
-    "id": "U003",
-    "name": "Dr. Jack",
+    "id": "U21",
     "specialization": "generalPractitioner",
     "availability": [
       {
@@ -18,7 +17,6 @@
   },
   {
     "id": "U004",
-    "name": "Dr. Jill",
     "specialization": "cardiologist",
     "availability": [
       {

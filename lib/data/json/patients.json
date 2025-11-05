@@ -1,20 +1,20 @@
 [
   {
     "id": "U001",
-    "name": "Chanlin",
     "age": 25,
-    "gender": "Male"
+    "gender": "Male",
+    "description": "Patient has a history of asthma."
   },
   {
     "id": "U002",
-    "name": "Sophea",
     "age": 30,
-    "gender": "Female"
+    "gender": "Female",
+    "description": "Allergic to penicillin."
   },
   {
     "id": "U005",
-    "name": "Piseth",
     "age": 29,
-    "gender": "Male"
+    "gender": "Male",
+    "description": "No significant medical history."
   }
 ]

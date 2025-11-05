@@ -4,10 +4,6 @@ import '../domain/users/user.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-
-
-enum UserRole{patient, doctor}
-
 class AuthenticationService{
   final List<Patient> _patients;
   final List<Doctor> _doctors;
@@ -15,10 +11,14 @@ class AuthenticationService{
   User? _currentUser;
 
   AuthenticationService(this._patients, this._doctors);
-
+  
   String hashPassword(String password) {
+    // convert password into byte
     final bytes = utf8.encode(password);
+
+    // hash the byte
     final digest = sha256.convert(bytes);
+    
     return digest.toString();
   }
 

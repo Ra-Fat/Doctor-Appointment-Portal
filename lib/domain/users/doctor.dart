@@ -15,24 +15,21 @@ enum Specialization {
   surgeon
 }
 
-class Doctor extends User{
-  String _name;
+class Doctor extends User {
   Specialization _specialization;
   List<Availability> availability;
 
-  String get name => _name;
   Specialization get specialization => _specialization;
 
-  Doctor(
-      {required String id,
-      required String email,
-      required String password,
-      required String name,
-      required Gender gender,
-      required Specialization specialization,
-      List<Availability>? availability})
-      : _name = name,
-        _specialization = specialization,
+  Doctor({
+    required String id,
+    required String email,
+    required String password,
+    required String name,
+    required Gender gender,
+    required Specialization specialization,
+    List<Availability>? availability,
+  })  : _specialization = specialization,
         availability = availability ?? [],
         super(
           id: id,
@@ -40,15 +37,15 @@ class Doctor extends User{
           password: password,
           role: UserRole.doctor,
           gender: gender,
+          name: name,
         );
-  
-  // 
+
   factory Doctor.fromMap(Map<String, dynamic> json) {
     return Doctor(
       id: json['id'] as String,
-      name: json['name'] as String,
-      email: json['email'] as String,
-      password: json['[password]'] as String, 
+      email: (json['email'] as String?) ?? '',
+      password: (json['password'] as String?) ?? '',
+      name: (json['name'] as String?) ?? 'Unknown',
       gender: json['gender'] == 'Male' ? Gender.Male : Gender.Female,
       specialization: Specialization.values.firstWhere(
         (e) => e.name == json['specialization'],
@@ -106,12 +103,12 @@ class Doctor extends User{
   @override
   String toString() {
     return '''
-      Doctor ID: $id
-      Name: $name
-      Gender: ${gender.name}
-      Specialization: ${_specialization.name}
-      Email: $email
-      Availability: $availability
+        Doctor ID: $id
+        Name: $name
+        Gender: ${gender.name}
+        Specialization: ${_specialization.name}
+        Email: $email
+        Availability: $availability
     ''';
   }
 }
