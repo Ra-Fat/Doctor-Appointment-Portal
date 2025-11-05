@@ -6,3 +6,5 @@ environment:
 dependencies:
   test: ^1.26.3
   uuid: ^4.5.1
+  crypto: ^3.0.1
+

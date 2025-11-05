@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:my_first_project/domain/appointmentManager.dart';
-import 'package:my_first_project/domain/doctor.dart';
+import 'package:my_first_project/domain/Doctor.dart';
 import 'package:my_first_project/domain/patient.dart';
 import 'package:my_first_project/ui/doctorUI.dart';
 import 'package:my_first_project/ui/patientUI.dart';

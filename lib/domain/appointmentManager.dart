@@ -1,6 +1,6 @@
 import 'package:my_first_project/domain/appointment.dart';
-import 'package:my_first_project/domain/doctor.dart';
-import 'package:my_first_project/domain/patient.dart';
+import 'package:my_first_project/domain/users/doctor.dart';
+import 'package:my_first_project/domain/users/patient.dart';
 
 class Appointmentmanager {
   List<Appointment> appointments;
@@ -10,6 +10,16 @@ class Appointmentmanager {
   List<Appointment> getAllAppointmentForDoctor(Doctor doctor) {
     return appointments =
         appointments.where((doctor) => doctor == doctor.id).toList();
+  }
+
+  // get all appointment from system
+  List<Appointment> getAllAppointment(){
+    return List<Appointment>.from(appointments);
+  }
+
+  // get all appointment for target doctor
+  List<Appointment> getDoctorAppointment(Doctor doctor) {
+    return appointments.where((appointment)=> appointment.doctor.id == doctor.id).toList();
   }
 
   List<Appointment> getAllAppointmentForPatient(Patient patient) {
@@ -38,7 +48,6 @@ class Appointmentmanager {
   // Cancel an appointment
   bool cancelAppointment(Appointment appointment) {
     if (!appointments.contains(appointment)) return false;
-
     appointment.markCancelled();
     appointments.remove(appointment);
     appointment.doctor.appointments.remove(appointment);

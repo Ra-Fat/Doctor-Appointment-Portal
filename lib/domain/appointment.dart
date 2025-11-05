@@ -1,5 +1,5 @@
-import 'package:my_first_project/domain/doctor.dart';
-import 'package:my_first_project/domain/patient.dart';
+import 'package:my_first_project/domain/users/doctor.dart';
+import 'package:my_first_project/domain/users/patient.dart';
 import 'package:uuid/uuid.dart';
 
 enum AppointmentStatus {
@@ -45,6 +45,10 @@ class Appointment {
 
   bool isMissed() => DateTime.now().isAfter(endTime) && status != AppointmentStatus.completed && status != AppointmentStatus.cancelled;
 
+  // Check does it can be rescheduled or not
+  bool canBeRescheduled() => status == AppointmentStatus.scheduled && DateTime.now().isBefore(startTime);
+
+  /// Mark appointment as completed
   void markCompleted() => status = AppointmentStatus.completed;
 
   void markCancelled() => status = AppointmentStatus.cancelled;
