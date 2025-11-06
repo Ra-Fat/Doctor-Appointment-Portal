@@ -1,0 +1,17 @@
+[
+  {
+    "id": "U001",
+    "gender": "Male",
+    "description": "Patient has a history of asthma."
+  },
+  {
+    "id": "U002",
+    "gender": "Female",
+    "description": "Allergic to penicillin."
+  },
+  {
+    "id": "U005",
+    "gender": "Male",
+    "description": "No significant medical history."
+  }
+]

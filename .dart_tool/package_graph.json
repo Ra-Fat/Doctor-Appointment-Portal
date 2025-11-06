@@ -7,10 +7,18 @@
       "name": "my_first_project",
       "version": "0.0.0",
       "dependencies": [
+        "crypto",
         "test",
         "uuid"
       ],
       "devDependencies": []
+    },
+    {
+      "name": "crypto",
+      "version": "3.0.6",
+      "dependencies": [
+        "typed_data"
+      ]
     },
     {
       "name": "uuid",
@@ -55,6 +63,13 @@
       ]
     },
     {
+      "name": "typed_data",
+      "version": "1.4.0",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
       "name": "fixnum",
       "version": "1.1.1",
       "dependencies": []
@@ -68,13 +83,6 @@
       "name": "sprintf",
       "version": "7.0.0",
       "dependencies": []
-    },
-    {
-      "name": "crypto",
-      "version": "3.0.6",
-      "dependencies": [
-        "typed_data"
-      ]
     },
     {
       "name": "yaml",
@@ -101,13 +109,6 @@
         "stream_channel",
         "web",
         "web_socket"
-      ]
-    },
-    {
-      "name": "typed_data",
-      "version": "1.4.0",
-      "dependencies": [
-        "collection"
       ]
     },
     {
