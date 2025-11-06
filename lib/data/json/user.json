@@ -1,0 +1,66 @@
+[
+  {
+    "id": "U001",
+    "email": "chanlin@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "patient",
+    "name": "chanlin",
+    "age": 30
+  },
+  {
+    "id": "U002",
+    "email": "sophea@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "patient",
+    "name": "sophea",
+    "age": 28
+  },
+  {
+    "id": "U005",
+    "email": "jill@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "patient",
+    "name": "jill",
+    "age": 25
+  },
+  {
+    "id": "U021",
+    "email": "alice@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. Alice",
+    "age": 40
+  },
+  {
+    "id": "U022",
+    "email": "bob@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. Bob",
+    "age": 50
+  },
+  {
+    "id": "U023",
+    "email": "carol@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. Carol",
+    "age": 45
+  },
+  {
+    "id": "U024",
+    "email": "david@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. David",
+    "age": 38
+  },
+  {
+    "id": "U025",
+    "email": "jack@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. Jack",
+    "age": 42
+  }
+]

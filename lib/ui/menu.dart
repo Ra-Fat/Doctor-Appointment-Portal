@@ -1,40 +1,58 @@
+// menu.dart
 import 'dart:io';
-import '../domain/appointment.dart';
-import '../domain/doctor.dart';
-import 'invoice.dart';
-import '../domain/hospitalSystem.dart';
-import '../domain/patient.dart';
 
-class MenuConsole{
-  late Hospitalsystem hospitalsystem;
+import 'package:my_first_project/service/authentication_service.dart';
+import 'package:my_first_project/service/appointment_manager.dart';
+import 'package:my_first_project/domain/users/doctor.dart';
+import 'package:my_first_project/domain/users/patient.dart';
+import 'package:my_first_project/ui/doctorMenu.dart';
+import 'package:my_first_project/ui/patientMenu.dart';
+import 'package:my_first_project/data/appointment_data.dart';
 
-  void Menu(){
+class MenuConsole {
+  Appointmentmanager manager;
+  List<Patient> patients;
+  List<Doctor> doctors;
+  AppointmentRepository appointmentRepo;
+  AuthenticationService authService;
 
-    print("--- Welcome to CADT hospital ---");
+  MenuConsole(this.manager, this.patients, this.doctors, this.appointmentRepo)
+      : authService = AuthenticationService(patients, doctors);
 
-    while(true){
-      print('---------------------------');
-      print("1. Manage Appointment");
-      print("2. Manage Patient");
-      print("3. Arrange Doctor");
-      print("4. Exit the program");
-      print('---------------------------');
+  Future<void> start() async {
+    while (true) {
+      print('\n=== Hospital Appointment Portal ===');
+      print('1. Login');
+      print('2. Exit');
+      stdout.write('Enter your choice: ');
+      final choice = stdin.readLineSync();
 
-      stdout.write("Enter your choice: ");
-      String? choice= stdin.readLineSync();
+      switch (choice) {
+        case '1':
+          stdout.write('Email: ');
+          final String email = stdin.readLineSync() ?? '';
+          stdout.write('Password: ');
+          final String password = stdin.readLineSync() ?? '';
 
-      switch(choice){
-        case "1":
+          final user = authService.login(email, password);
+
+          if (user is Patient) {
+            manager.updateMissedAppointment();
+            print('Patient logged in. Redirecting to Patient Portal...');
+            await PatientUi(manager, user, doctors, appointmentRepo).showMenu();
+          } else if (user is Doctor) {
+            print('Doctor logged in. Redirecting to Doctor Portal...');
+            await DoctorUi(manager, user, appointmentRepo).showMenu();
+          } else {
+            print('Invalid email or password. Try again.');
+          }
           break;
-        case "2":
-          break;
-        case "3":
-          break;
-        case "4":
-          print("Exit the program!!!");
+
+        case '2':
+          print('Exiting... Goodbye!');
           return;
         default:
-          print("Invalid choice !!! \n");
+          print('Invalid choice. Try again.');
       }
     }
   }
