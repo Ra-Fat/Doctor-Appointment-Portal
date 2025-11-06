@@ -1,17 +1,19 @@
 import 'dart:io';
 import 'package:my_first_project/domain/appointment.dart';
-import 'package:my_first_project/application/appointmentManager.dart';
+import 'package:my_first_project/service/appointment_manager.dart';
 import 'package:my_first_project/domain/users/doctor.dart';
+import 'package:my_first_project/data/appointment_data.dart';
+
 
 class DoctorUi {
   final Appointmentmanager manager;
   final Doctor doctor;
+  final AppointmentRepository appointmentRepo;
 
-  DoctorUi(this.manager, this.doctor);
+  DoctorUi(this.manager, this.doctor, this.appointmentRepo);
 
-  void showMenu() {
+  Future<void> showMenu() async {
     while (true) {
-      //Ai-generated
       print("""
       --- Doctor Portal ---
       1. View Today's Appointments
@@ -97,6 +99,7 @@ class DoctorUi {
             } else {
               final appointment = completableAppointments[index - 1];
               appointment.markCompleted();
+              await appointmentRepo.saveAppointments(manager.appointments);
               print('Appointment marked as completed.');
             }
           } catch (e) {

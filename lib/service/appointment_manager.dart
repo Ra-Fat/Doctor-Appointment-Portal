@@ -2,6 +2,7 @@ import 'package:my_first_project/domain/appointment.dart';
 import 'package:my_first_project/domain/users/doctor.dart';
 import 'package:my_first_project/domain/users/patient.dart';
 
+
 class Appointmentmanager {
   List<Appointment> appointments;
 
@@ -11,34 +12,32 @@ class Appointmentmanager {
     return List<Appointment>.from(appointments);
   }
 
-  bool scheduleAppointment(
-      Patient patient, Doctor doctor, DateTime start, DateTime end) {
-    // Validate appointment time is in the future
+  bool scheduleAppointment(Patient patient, Doctor doctor, DateTime start, DateTime end, {String? description}) {
+    
+    // validate appointment time is in the future
     if (start.isBefore(DateTime.now())) {
       print('Cannot schedule appointments in the past.');
       return false;
     }
 
-    // Validate start is before end
+    // validate start time is before end time
     if (!start.isBefore(end)) {
       print('Start time must be before end time.');
       return false;
     }
-
-    // Validate minimum notice period (min an hour from current time)
+    
+    // ai generated
     final minNotice = DateTime.now().add(Duration(hours: 1));
     if (start.isBefore(minNotice)) {
       print('Appointments must be scheduled at least 1 hour in advance.');
       return false;
     }
 
-    // Check if doctor is available
     if (!doctor.isAvailable(start, end)) {
       print('Dr.${doctor.name} is not available.');
       return false;
     }
 
-    // Check if patient already has appointment at same time
     final hasPatientConflict = patient.appointments.any((existingAppointment) =>
         existingAppointment.status == AppointmentStatus.scheduled &&
         existingAppointment.startTime.isBefore(end) &&
@@ -50,12 +49,19 @@ class Appointmentmanager {
     }
 
     Appointment appointment = Appointment(
-        doctor: doctor, patient: patient, startTime: start, endTime: end);
+      doctor: doctor,
+      patient: patient,
+      startTime: start,
+      endTime: end,
+      description: description,
+    );
 
     appointments.add(appointment);
-    appointment.doctor.appointments.add(appointment);
-    appointment.patient.appointments.add(appointment);
+    doctor.appointments.add(appointment);
+    patient.appointments.add(appointment);
+
     print("Appointment scheduled for ${patient.name} with Dr. ${doctor.name}");
+
     return true;
   }
 
@@ -65,7 +71,6 @@ class Appointmentmanager {
       return false;
     }
 
-    // Cannot cancel already cancelled or completed appointments
     if (appointment.status == AppointmentStatus.cancelled) {
       print('Appointment is already cancelled.');
       return false;
@@ -75,21 +80,19 @@ class Appointmentmanager {
       return false;
     }
 
-    // Cannot cancel past appointments
     if (appointment.startTime.isBefore(DateTime.now())) {
       print('Cannot cancel appointments that have already started or passed.');
       return false;
     }
 
     appointment.markCancelled();
-    appointments.remove(appointment);
-    appointment.doctor.appointments.remove(appointment);
-    appointment.patient.appointments.remove(appointment);
 
     print(
         'Appointment cancelled: ${appointment.patient.name} with Dr. ${appointment.doctor.name}');
     return true;
   }
+  
+
 
   bool rescheduleAppointment(
       Appointment appointment, DateTime newStart, DateTime newEnd) {
@@ -159,11 +162,16 @@ class Appointmentmanager {
   }
 
   List<Doctor> getAvailableDoctors(
-      DateTime start, DateTime end, List<Doctor> allDoctors) {
-    return allDoctors
-        .where((doctor) => doctor.isAvailable(start, end))
-        .toList();
+    DateTime start, DateTime end, List<Doctor> allDoctors) {
+    List<Doctor> available = [];
+    for (var doctor in allDoctors) {
+      if (doctor.isAvailable(start, end)) {
+        available.add(doctor);
+      }
+    }
+    return available;
   }
+
 
   void updateMissedAppointment() {
     for (Appointment appointment in appointments) {

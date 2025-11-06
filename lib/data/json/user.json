@@ -2,43 +2,65 @@
   {
     "id": "U001",
     "email": "chanlin@example.com",
-    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbddabf0be9f3e21401e9",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
     "role": "patient",
-    "name": "chanlin"
+    "name": "chanlin",
+    "age": 30
   },
   {
     "id": "U002",
     "email": "sophea@example.com",
-    "password": "ef92b778ba1d8b69e24f8a7bbf5a1a284d2b8a9a1ad8e6b9a936dd8fdf1b8f32",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
     "role": "patient",
-    "name": "sophea"
-  },
-  {
-    "id": "U003",
-    "email": "dr.sokha@example.com",
-    "password": "2c1743a391305fbf367df8e4f069f9f9a364735c6d1a50d4fbc8b2290e2c5e41",
-    "role": "doctor",
-    "name": "sokha"
-  },
-  {
-    "id": "U004",
-    "email": "dr.vanna@example.com",
-    "password": "bcb92e2a51c2044b61a3d2b8a47a1e3c6c8a126ccca5e8f9a78c1b73e32e3cbb",
-    "role": "doctor",
-    "name": "vanna"
+    "name": "sophea",
+    "age": 28
   },
   {
     "id": "U005",
     "email": "jill@example.com",
     "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
     "role": "patient",
-    "name": "jill"
+    "name": "jill",
+    "age": 25
   },
   {
-    "id": "U21",
-    "email": "jack@example.com",
-    "password": "372934cf78a905b9f5931dcbf621e58069aed5a883ff7befb605796db3d7c57d",
+    "id": "U021",
+    "email": "alice@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
     "role": "doctor",
-    "name": "jack"
+    "name": "Dr. Alice",
+    "age": 40
+  },
+  {
+    "id": "U022",
+    "email": "bob@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. Bob",
+    "age": 50
+  },
+  {
+    "id": "U023",
+    "email": "carol@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. Carol",
+    "age": 45
+  },
+  {
+    "id": "U024",
+    "email": "david@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. David",
+    "age": 38
+  },
+  {
+    "id": "U025",
+    "email": "jack@example.com",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "doctor",
+    "name": "Dr. Jack",
+    "age": 42
   }
 ]

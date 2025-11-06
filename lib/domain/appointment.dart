@@ -33,22 +33,54 @@ class Appointment {
 
   String get id => _id;
 
-  bool conflictsWith(Appointment appointment) {
-    return doctor == appointment.doctor &&
-        startTime.isBefore(appointment.endTime) &&
-        endTime.isAfter(appointment.startTime);
+  // Factory constructor for create appointment obj
+  factory Appointment.fromJson(Map<String, dynamic> json, Doctor doctor, Patient patient) {
+    return Appointment(
+      id: json['id'],
+      doctor: doctor,
+      patient: patient,
+      startTime: DateTime.parse(json['startTime']),
+      endTime: DateTime.parse(json['endTime']),
+      status: AppointmentStatus.values.firstWhere(
+        (e) => e.toString().split('.').last == json['status'],
+        orElse: () => AppointmentStatus.scheduled,
+      ),
+      description: json['description'],
+    );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'doctorId': doctor.id,
+      'patientId': patient.id,
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime.toIso8601String(),
+      'status': status.toString().split('.').last,
+      'description': description,
+    };
+  }
+
+  // checking conflic time of appointments w the same doctor
+  bool conflictsWith(Appointment appointment) {
+    bool conflict = doctor == appointment.doctor &&
+        startTime.isBefore(appointment.endTime) &&
+        endTime.isAfter(appointment.startTime);
+    return conflict;
+  }
+
+  // checking the upcoming appointments
   bool isUpcoming() => DateTime.now().isBefore(startTime);
 
+  // checking the missed appointments
   bool isMissed() {
-    // Add 24-hour grace period for doctors to mark appointment as completed
     final gracePeriod = endTime.add(Duration(hours: 24));
     return DateTime.now().isAfter(gracePeriod) &&
         status != AppointmentStatus.completed &&
         status != AppointmentStatus.cancelled;
   }
 
+  // checking the cancelled appointments
   bool isCancelled() => status == AppointmentStatus.cancelled;
 
   bool canBeRescheduled() =>
@@ -67,8 +99,8 @@ class Appointment {
     End Time: $endTime
     Status: $status
     Description: $description
-    Doctor: ${doctor}
-    Patient: ${patient}
+    Doctor: ${doctor.name}
+    Patient: ${patient.name}
   ''';
   }
 }

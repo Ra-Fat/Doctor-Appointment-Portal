@@ -3,7 +3,6 @@ import 'package:my_first_project/domain/users/patient.dart';
 import 'package:my_first_project/domain/users/user.dart';
 import 'package:my_first_project/domain/availability.dart';
 
-/// Test data helper to provide mock doctors and patients for testing
 class TestData {
   // Mock Doctors with 24/7 availability for testing
   static Doctor get doctor1 {
@@ -12,6 +11,7 @@ class TestData {
       email: 'doctor1@test.com',
       password: 'password123',
       name: 'Dr. Sarah Smith',
+      age: 21,
       gender: Gender.Female,
       specialization: Specialization.cardiologist,
     );
@@ -26,6 +26,7 @@ class TestData {
       email: 'doctor2@test.com',
       password: 'password123',
       name: 'Dr. John Jones',
+      age: 20,
       gender: Gender.Male,
       specialization: Specialization.pediatrician,
     );
@@ -39,6 +40,7 @@ class TestData {
       email: 'doctor3@test.com',
       password: 'password123',
       name: 'Dr. Emily Brown',
+      age: 30,
       gender: Gender.Female,
       specialization: Specialization.generalPractitioner,
     );
@@ -46,7 +48,6 @@ class TestData {
     return doc;
   }
 
-  // Helper to create 24/7 availability for testing
   static List<Availability> _getAllDayAvailability() {
     return [
       Availability(

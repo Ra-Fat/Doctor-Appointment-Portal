@@ -26,6 +26,7 @@ class Doctor extends User {
     required String password,
     required String name,
     required Gender gender,
+    required int age,
     required Specialization specialization,
     List<Availability>? availability,
     List<Appointment>? appointments,
@@ -38,38 +39,52 @@ class Doctor extends User {
           role: UserRole.doctor,
           gender: gender,
           name: name,
+          age: age,
           appointments: appointments ?? [],
         );
 
+  // Factory constructor for create doctor obj
   factory Doctor.fromMap(Map<String, dynamic> json) {
+    
+    final availabilityList = (json['availability'] as List<dynamic>?)
+        ?.map((e) => Availability.fromJson(e))
+        .toList() ?? [];
+
     return Doctor(
       id: json['id'] as String,
       email: (json['email'] as String?) ?? '',
       password: (json['password'] as String?) ?? '',
       name: (json['name'] as String?) ?? 'Unknown',
+      age: json['age'] != null ? json['age'] as int : 0,
       gender: json['gender'] == 'Male' ? Gender.Male : Gender.Female,
       specialization: Specialization.values.firstWhere(
         (e) => e.name == json['specialization'],
         orElse: () => Specialization.generalPractitioner,
       ),
-      availability: (json['availability'] as List<dynamic>?)
-          ?.map((e) => Availability.fromJson(e))
-          .toList(),
+      availability: availabilityList,
     );
   }
 
+  // Checks if the doctor is available
   bool isAvailable(DateTime start, DateTime end) {
-    final bool Availability =
-        availability.any((slot) => slot.isFit(start, end));
 
-    if (!Availability) return false;
+    final availabilityFits = availability.any((slot) {
+      return slot.isFit(start, end);
+    });
 
-    final bool hasConflict = appointments.any((existingAppointment) =>
-        existingAppointment.conflictsWith(Appointment(
-            doctor: this,
-            patient: existingAppointment.patient,
-            startTime: start,
-            endTime: end)));
+    if (!availabilityFits) {
+      return false;
+    }
+
+    final hasConflict = appointments.any((existing) =>
+      existing.conflictsWith(Appointment(
+        doctor: this,
+        patient: existing.patient,
+        startTime: start,
+        endTime: end,
+      ))
+    );
+
     return !hasConflict;
   }
 }

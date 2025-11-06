@@ -3,10 +3,15 @@ import '../domain/users/user.dart';
 import '../domain/users/patient.dart';
 import '../domain/users/doctor.dart';
 
-
 Future<List<User>> loadAndMergeUsers(UserRepository repo) async {
+
+  // Load detailed users data
   final users = await repo.loadUserJson();
+
+  // Load detailed patients data
   final patients = await repo.loadPatientJson();
+
+  // Load detailed doctors data
   final doctors = await repo.loadDoctorJson();
 
   List<User> mergedUsers = [];
@@ -20,10 +25,10 @@ Future<List<User>> loadAndMergeUsers(UserRepository repo) async {
         patient = null;
       }
 
+      // ai generated
       if (patient != null) {
         final mergedMap = {
           ...user.toJson(),
-          'age': patient.age,
           'description': patient.description,
           'gender': patient.gender.name,
         };
@@ -39,11 +44,13 @@ Future<List<User>> loadAndMergeUsers(UserRepository repo) async {
         doctor = null;
       }
 
+      // ai generated
       if (doctor != null) {
         final mergedMap = {
           ...user.toJson(),
           'specialization': doctor.specialization.name,
           'gender': doctor.gender.name,
+          'availability': doctor.availability.map((a) => a.toJson()).toList(),
         };
         mergedUsers.add(Doctor.fromMap(mergedMap));
       } else {
@@ -53,6 +60,5 @@ Future<List<User>> loadAndMergeUsers(UserRepository repo) async {
       mergedUsers.add(user);
     }
   }
-
   return mergedUsers;
 }

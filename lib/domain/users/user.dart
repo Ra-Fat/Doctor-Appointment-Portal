@@ -11,6 +11,7 @@ class User {
   final UserRole role;
   final Gender gender;
   final String name;
+  final int age;
   List<Appointment> appointments;
 
   User({
@@ -20,9 +21,11 @@ class User {
     required this.role,
     required this.gender,
     required this.name,
+    required this.age,
     List<Appointment>? appointments,
   }) : appointments = appointments ?? [];
 
+  // Factory constructor for create user obj
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] as String,
@@ -34,9 +37,10 @@ class User {
       ),
       gender: json['gender'] == 'Male' ? Gender.Male : Gender.Female,
       name: json['name'] as String,
+      age: json['age'] != null ? json['age'] as int : 0,
     );
   }
-
+  
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -45,21 +49,24 @@ class User {
       'role': role.toString().split('.').last,
       'gender': gender.toString().split('.').last,
       'name': name,
+      'age': age,
     };
   }
 
+  // find the upcoming appointments
   List<Appointment> getUpcomingAppointments() {
     return appointments
       .where((appointment) => appointment.isUpcoming())
       .toList();
   }
 
+   // find the missed appointments
   List<Appointment> getMissedAppointments() {
       return appointments
       .where((appointment) => appointment.isMissed())
       .toList();
     }
-
+  // find the cancelled appointments
   List<Appointment> getCancelledAppointments() {
     return appointments
       .where((appointment) => appointment.isCancelled())
@@ -68,6 +75,6 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, role: ${role.toString().split('.').last}, gender: ${gender.toString().split('.').last})';
+    return 'User(id: $id, name: $name, age: $age, email: $email, role: ${role.toString().split('.').last}, gender: ${gender.toString().split('.').last})';
   }
 }

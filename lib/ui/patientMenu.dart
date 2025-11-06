@@ -1,20 +1,21 @@
 import 'dart:io';
 
 import 'package:my_first_project/domain/appointment.dart';
-import 'package:my_first_project/application/appointmentManager.dart';
+import 'package:my_first_project/service/appointment_manager.dart';
 import 'package:my_first_project/domain/users/doctor.dart';
 import 'package:my_first_project/domain/users/patient.dart';
+import 'package:my_first_project/data/appointment_data.dart';
 
 class PatientUi {
   final Appointmentmanager manager;
   final Patient patient;
   final List<Doctor> doctors;
+  final AppointmentRepository appointmentRepo;
 
-  PatientUi(this.manager, this.patient, this.doctors);
+  PatientUi(this.manager, this.patient, this.doctors, this.appointmentRepo);
 
-  void showMenu() {
+ Future<void> showMenu() async {
     while (true) {
-      //Ai-generated
       print("""
       --- Patient Portal ---
         1. View Upcoming Appointments
@@ -115,12 +116,15 @@ class PatientUi {
 
             final selectedDoctor = availableDoctors[doctorIndex - 1];
 
-            if (manager.scheduleAppointment(
-                patient, selectedDoctor, start, end)) {
-              print('Appointment scheduled successfully!');
-            } else {
-              print('Failed to schedule appointment.');
-            }
+            stdout.write('Enter description for the appointment: ');
+            final description = stdin.readLineSync();
+
+            if (manager.scheduleAppointment(patient, selectedDoctor, start, end, description: description)){
+                await appointmentRepo.saveAppointments(manager.appointments);
+                print('Appointment scheduled successfully!');
+              } else {
+                print('Failed to schedule appointment.');
+              }
           } catch (e) {
             print('Invalid input. Please try again.');
           }
@@ -159,6 +163,7 @@ class PatientUi {
             } else {
               final appointment = cancellableAppointments[index - 1];
               if (manager.cancelAppointment(appointment)) {
+                await appointmentRepo.saveAppointments(manager.appointments);
                 print('Appointment cancelled successfully.');
               }
             }
@@ -210,6 +215,7 @@ class PatientUi {
 
             if (manager.rescheduleAppointment(appointment, newStart, newEnd)) {
               print('Appointment rescheduled successfully.');
+              await appointmentRepo.saveAppointments(manager.appointments);
             } else {
               print('Failed to reschedule appointment.');
             }

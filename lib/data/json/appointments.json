@@ -1,0 +1,92 @@
+[
+  {
+    "id": "A001",
+    "doctorId": "U024",
+    "patientId": "U005",
+    "startTime": "2025-11-09T10:00:00",
+    "endTime": "2025-11-09T10:30:00",
+    "status": "scheduled",
+    "description": "Upcoming - Routine check-up with Dr. David"
+  },
+  {
+    "id": "A002",
+    "doctorId": "U021",
+    "patientId": "U005",
+    "startTime": "2025-11-12T15:00:00",
+    "endTime": "2025-11-12T15:45:00",
+    "status": "scheduled",
+    "description": "Upcoming - General health follow-up with Dr. Alice"
+  },
+  {
+    "id": "A003",
+    "doctorId": "U024",
+    "patientId": "U005",
+    "startTime": "2025-10-10T09:00:00",
+    "endTime": "2025-10-10T09:30:00",
+    "status": "missed",
+    "description": "Missed - Heart check-up with Dr. David"
+  },
+  {
+    "id": "A004",
+    "doctorId": "U021",
+    "patientId": "U005",
+    "startTime": "2025-09-15T14:00:00",
+    "endTime": "2025-09-15T14:30:00",
+    "status": "cancelled",
+    "description": "Cancelled - Follow-up with Dr. Alice"
+  },
+  {
+    "id": "A005",
+    "doctorId": "U024",
+    "patientId": "U005",
+    "startTime": "2025-10-20T11:00:00",
+    "endTime": "2025-10-20T11:30:00",
+    "status": "completed",
+    "description": "Completed - Cardiology consultation with Dr. David"
+  },
+  {
+    "id": "980f4f3a-c6ee-47ab-982a-52f59c8cf3b4",
+    "doctorId": "U024",
+    "patientId": "U005",
+    "startTime": "2025-11-10T09:30:00",
+    "endTime": "2025-11-10T10:00:00",
+    "status": "scheduled",
+    "description": null
+  },
+  {
+    "id": "74622efd-14f9-4882-ba8d-6d9f63a0bab9",
+    "doctorId": "U023",
+    "patientId": "U005",
+    "startTime": "2025-11-10T09:30:00",
+    "endTime": "2025-11-10T10:00:00",
+    "status": "cancelled",
+    "description": "headach"
+  },
+  {
+    "id": "appt-today-001",
+    "doctorId": "U025",
+    "patientId": "U005",
+    "startTime": "2025-11-06T14:00:00",
+    "endTime": "2025-11-06T14:30:00",
+    "status": "completed",
+    "description": "Today's appointment - General consultation with Dr. jack"
+  },
+  {
+    "id": "appt-tmr-002",
+    "doctorId": "U025",
+    "patientId": "U005",
+    "startTime": "2025-11-07T10:00:00",
+    "endTime": "2025-11-07T10:45:00",
+    "status": "scheduled",
+    "description": "Tomorrow's appointment - Follow-up with Dr. jack"
+  },
+  {
+    "id": "622f272b-512e-4325-a108-25052090afe2",
+    "doctorId": "U025",
+    "patientId": "U005",
+    "startTime": "2025-11-07T09:00:00",
+    "endTime": "2025-11-07T09:30:00",
+    "status": "scheduled",
+    "description": "headach"
+  }
+]

@@ -1,23 +1,28 @@
 class Availability {
-  String day;
-  DateTime startTime;
-  DateTime endTime;
+  final String day;
+  final DateTime startTime;
+  final DateTime endTime;
 
   Availability({
     required this.day,
     required this.startTime,
     required this.endTime,
-  });
+  }) {
+    if (!startTime.isBefore(endTime)) {
+      throw ArgumentError('startTime must be before endTime');
+    }
+  }
 
+  // ai generated
   factory Availability.fromJson(Map<String, dynamic> json) {
-    String startTimeStr = json['startTime'] as String;
-    String endTimeStr = json['endTime'] as String;
+    final startTimeStr = json['startTime'] as String;
+    final endTimeStr = json['endTime'] as String;
 
-    // Parse "HH:mm:ss"
     List<String> startParts = startTimeStr.split(':');
     List<String> endParts = endTimeStr.split(':');
 
-    DateTime startTime = DateTime(
+    // ai generated
+    final startTime = DateTime(
       2000,
       1,
       1,
@@ -26,7 +31,7 @@ class Availability {
       int.parse(startParts[2]),
     );
 
-    DateTime endTime = DateTime(
+    final endTime = DateTime(
       2000,
       1,
       1,
@@ -42,20 +47,39 @@ class Availability {
     );
   }
 
+  // ai generated
+  Map<String, dynamic> toJson() {
+    String _formatTime(DateTime time) {
+      return '${time.hour.toString().padLeft(2, '0')}:'
+             '${time.minute.toString().padLeft(2, '0')}:'
+             '${time.second.toString().padLeft(2, '0')}';
+    }
+
+    return {
+      'day': day,
+      'startTime': _formatTime(startTime),
+      'endTime': _formatTime(endTime),
+    };
+  }
+
+  // ai generated
+  /// Checks if the requested appointment [start] and [end] times
   bool isFit(DateTime start, DateTime end) {
     final String dayName = _getDayName(start.weekday);
-    if (dayName != day) {
+
+    if (dayName.toLowerCase().trim() != day.toLowerCase().trim()) {
       return false;
     }
 
-    // Extract time-of-day from appointment (ignore actual date)
-    // Normalize to year 2000 to compare against availability times
-    final appointmentStart = DateTime(2000, 1, 1, start.hour, start.minute);
-    final appointmentEnd = DateTime(2000, 1, 1, end.hour, end.minute);
+    final slotStart = DateTime(2000, 1, 1, startTime.hour, startTime.minute, startTime.second);
+    final slotEnd = DateTime(2000, 1, 1, endTime.hour, endTime.minute, endTime.second);
+    final appointmentStart = DateTime(2000, 1, 1, start.hour, start.minute, start.second);
+    final appointmentEnd = DateTime(2000, 1, 1, end.hour, end.minute, end.second);
 
-    return !appointmentStart.isBefore(startTime) &&
-        !appointmentEnd.isAfter(endTime);
+    return !appointmentStart.isBefore(slotStart) && !appointmentEnd.isAfter(slotEnd);
   }
+
+
 
   String _getDayName(int weekday) {
     const days = [

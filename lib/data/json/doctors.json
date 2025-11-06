@@ -1,33 +1,156 @@
 [
   {
-    "id": "U21",
+    "id": "U021",
     "specialization": "generalPractitioner",
     "availability": [
       {
         "day": "Monday",
-        "startTime": "09:00:00",
+        "startTime": "08:00:00",
+        "endTime": "12:00:00"
+      },
+      {
+        "day": "Tuesday",
+        "startTime": "08:00:00",
         "endTime": "12:00:00"
       },
       {
         "day": "Wednesday",
-        "startTime": "13:00:00",
+        "startTime": "08:00:00",
+        "endTime": "12:00:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "08:00:00",
+        "endTime": "12:00:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "08:00:00",
+        "endTime": "12:00:00"
+      }
+    ]
+  },
+  {
+    "id": "U022",
+    "specialization": "cardiologist",
+    "availability": [
+      {
+        "day": "Monday",
+        "startTime": "10:00:00",
+        "endTime": "16:00:00"
+      },
+      {
+        "day": "Tuesday",
+        "startTime": "10:00:00",
+        "endTime": "16:00:00"
+      },
+      {
+        "day": "Wednesday",
+        "startTime": "10:00:00",
+        "endTime": "16:00:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "10:00:00",
+        "endTime": "16:00:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "10:00:00",
+        "endTime": "16:00:00"
+      }
+    ]
+  },
+  {
+    "id": "U023",
+    "specialization": "dermatologist",
+    "availability": [
+      {
+        "day": "Monday",
+        "startTime": "09:00:00",
+        "endTime": "17:00:00"
+      },
+      {
+        "day": "Tuesday",
+        "startTime": "09:00:00",
+        "endTime": "17:00:00"
+      },
+      {
+        "day": "Wednesday",
+        "startTime": "09:00:00",
+        "endTime": "17:00:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "09:00:00",
+        "endTime": "17:00:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "09:00:00",
         "endTime": "17:00:00"
       }
     ]
   },
   {
-    "id": "U004",
-    "specialization": "cardiologist",
+    "id": "U024",
+    "specialization": "neurologist",
     "availability": [
       {
+        "day": "Monday",
+        "startTime": "07:00:00",
+        "endTime": "11:00:00"
+      },
+      {
         "day": "Tuesday",
-        "startTime": "10:00:00",
-        "endTime": "15:00:00"
+        "startTime": "07:00:00",
+        "endTime": "11:00:00"
+      },
+      {
+        "day": "Wednesday",
+        "startTime": "07:00:00",
+        "endTime": "11:00:00"
       },
       {
         "day": "Thursday",
-        "startTime": "09:00:00",
-        "endTime": "12:00:00"
+        "startTime": "07:00:00",
+        "endTime": "11:00:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "07:00:00",
+        "endTime": "11:00:00"
+      }
+    ]
+  },
+  {
+    "id": "U025",
+    "specialization": "pediatrician",
+    "availability": [
+      {
+        "day": "Monday",
+        "startTime": "13:00:00",
+        "endTime": "18:00:00"
+      },
+      {
+        "day": "Tuesday",
+        "startTime": "13:00:00",
+        "endTime": "18:00:00"
+      },
+      {
+        "day": "Wednesday",
+        "startTime": "13:00:00",
+        "endTime": "18:00:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "13:00:00",
+        "endTime": "18:00:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "07:00:00",
+        "endTime": "11:00:00"
       }
     ]
   }

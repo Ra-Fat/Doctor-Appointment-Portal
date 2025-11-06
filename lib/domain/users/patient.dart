@@ -2,14 +2,10 @@ import 'package:my_first_project/domain/appointment.dart';
 import 'user.dart';
 
 class Patient extends User {
-  int _age;
   String? _description;
 
-  int get age => _age;
   String? get description => _description;
-
   set description(String? value) => _description = value;
-  set age(int newAge) => _age = newAge;
 
   Patient({
     required String id,
@@ -20,11 +16,11 @@ class Patient extends User {
     required int age,
     String? description,
     List<Appointment>? appointments,
-  })  : _age = age,
-        _description = description,
+  })  :  _description = description,
         super(
           id: id,
           email: email,
+          age: age,
           password: password,
           role: UserRole.patient,
           gender: gender,
@@ -32,6 +28,7 @@ class Patient extends User {
           appointments: appointments,
         );
 
+  // Factory constructor for create patient obj
   factory Patient.fromMap(Map<String, dynamic> json) {
     return Patient(
       id: json['id'] as String,

@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:my_first_project/application/appointmentManager.dart';
+import 'package:my_first_project/service/appointment_manager.dart';
 import 'package:my_first_project/domain/appointment.dart';
 import 'package:my_first_project/domain/users/doctor.dart';
 import 'package:my_first_project/domain/users/patient.dart';
@@ -26,12 +26,19 @@ void main() {
           DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 10, 0);
       final end = start.add(Duration(hours: 1));
 
-      final result = manager.scheduleAppointment(patient, doctor, start, end);
+      final result = manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: 'Regular checkup',
+      );
 
       expect(result, isTrue);
       expect(manager.appointments.length, equals(1));
       expect(doctor.appointments.length, equals(1));
       expect(patient.appointments.length, equals(1));
+      expect(manager.appointments.first.description, equals('Regular checkup'));
     });
 
     test('Should fail to schedule appointment in the past', () {
@@ -40,7 +47,13 @@ void main() {
           DateTime(yesterday.year, yesterday.month, yesterday.day, 10, 0);
       final end = start.add(Duration(hours: 1));
 
-      final result = manager.scheduleAppointment(patient, doctor, start, end);
+      final result = manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: null,
+      );
 
       expect(result, isFalse);
       expect(manager.appointments, isEmpty);
@@ -52,7 +65,13 @@ void main() {
       final start = now.add(Duration(minutes: 30));
       final end = start.add(Duration(hours: 1));
 
-      final result = manager.scheduleAppointment(patient, doctor, start, end);
+      final result = manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: 'Urgent',
+      );
 
       expect(result, isFalse);
       expect(manager.appointments, isEmpty);
@@ -64,7 +83,13 @@ void main() {
           DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 11, 0);
       final end = DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 10, 0);
 
-      final result = manager.scheduleAppointment(patient, doctor, start, end);
+      final result = manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: 'Wrong timing',
+      );
 
       expect(result, isFalse);
       expect(manager.appointments, isEmpty);
@@ -77,7 +102,13 @@ void main() {
       final end = start.add(Duration(hours: 1));
 
       // Schedule first appointment
-      final result1 = manager.scheduleAppointment(patient, doctor, start, end);
+      final result1 = manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: 'Initial appointment',
+      );
       expect(result1, isTrue);
 
       // Try to schedule overlapping appointment for same patient with different doctor
@@ -89,6 +120,7 @@ void main() {
         TestData.doctor2,
         overlappingStart,
         overlappingEnd,
+        description: 'Overlap test',
       );
 
       expect(result2, isFalse);
@@ -107,9 +139,20 @@ void main() {
       patient2.appointments = [];
       doctor2.appointments = [];
 
-      final result1 = manager.scheduleAppointment(patient, doctor, start, end);
-      final result2 =
-          manager.scheduleAppointment(patient2, doctor2, start, end);
+      final result1 = manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: 'Patient 1 appointment',
+      );
+      final result2 = manager.scheduleAppointment(
+        patient2,
+        doctor2,
+        start,
+        end,
+        description: 'Patient 2 appointment',
+      );
 
       expect(result1, isTrue);
       expect(result2, isTrue);
@@ -136,7 +179,13 @@ void main() {
           DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 10, 0);
       final end = start.add(Duration(hours: 1));
 
-      manager.scheduleAppointment(patient, doctor, start, end);
+      manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: 'Cancellation test',
+      );
       appointment = manager.appointments.first;
     });
 
@@ -147,9 +196,11 @@ void main() {
 
       expect(result, isTrue);
       expect(appointment.status, equals(AppointmentStatus.cancelled));
-      expect(manager.appointments, isEmpty);
-      expect(doctor.appointments, isEmpty);
-      expect(patient.appointments, isEmpty);
+
+      // The appointment remains in the list after cancellation:
+      expect(manager.appointments.length, equals(1));
+      expect(doctor.appointments.length, equals(1));
+      expect(patient.appointments.length, equals(1));
     });
 
     test('Should fail to cancel non-existent appointment', () {
@@ -170,7 +221,6 @@ void main() {
       manager.cancelAppointment(appointment);
 
       // Try to cancel again
-      manager.appointments.add(appointment); // Re-add to list
       final result = manager.cancelAppointment(appointment);
 
       expect(result, isFalse);
@@ -178,7 +228,6 @@ void main() {
 
     test('Should fail to cancel completed appointment', () {
       appointment.markCompleted();
-      manager.appointments.add(appointment); // Re-add since cancel removes it
 
       final result = manager.cancelAppointment(appointment);
 
@@ -204,7 +253,13 @@ void main() {
           DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 10, 0);
       final end = start.add(Duration(hours: 1));
 
-      manager.scheduleAppointment(patient, doctor, start, end);
+      manager.scheduleAppointment(
+        patient,
+        doctor,
+        start,
+        end,
+        description: 'Reschedule test',
+      );
       appointment = manager.appointments.first;
     });
 
@@ -419,7 +474,13 @@ void main() {
       final end = start.add(Duration(hours: 1));
 
       // Schedule appointment with doctor1
-      manager.scheduleAppointment(patient, doctor1, start, end);
+      manager.scheduleAppointment(
+        patient,
+        doctor1,
+        start,
+        end,
+        description: 'Conflicting appointment',
+      );
 
       // Check availability for both doctors
       final doctors = [doctor1, doctor2];
@@ -446,8 +507,20 @@ void main() {
       final end = start.add(Duration(hours: 1));
 
       // Schedule both doctors
-      manager.scheduleAppointment(patient1, doctor1, start, end);
-      manager.scheduleAppointment(patient2, doctor2, start, end);
+      manager.scheduleAppointment(
+        patient1,
+        doctor1,
+        start,
+        end,
+        description: 'Busy doctor 1',
+      );
+      manager.scheduleAppointment(
+        patient2,
+        doctor2,
+        start,
+        end,
+        description: 'Busy doctor 2',
+      );
 
       final doctors = [doctor1, doctor2];
       final available = manager.getAvailableDoctors(start, end, doctors);
